@@ -19,7 +19,7 @@ public class DownloadFileService implements IDownloadFileService {
 	@Autowired 
 	private UtilPdf utilPdf;
 	
-	public final static String DIRECTORIO_DOWNLOAD = "downloads/";	
+	public final static String DIRECTORIO_DOWNLOAD = "/downloads/";	
 	public final static String PREFIJO_FILE_DOWNLOAD = "cv-AntonioFernandezLucena.pdf";	
 	public final static String FILE_DONWLOAD = "donwloads";	
 

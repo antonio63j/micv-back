@@ -9,9 +9,9 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.afl.micv-front</groupId>
+	<groupId>com.afl.micv-back</groupId>
 	<artifactId>micv-back</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.6</version>
 	<name>micv-back</name>
 	<description>Mi CV con Spring Boot (back)</description>
 

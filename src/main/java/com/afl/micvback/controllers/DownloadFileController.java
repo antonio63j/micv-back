@@ -69,18 +69,26 @@ public class DownloadFileController {
 	}
 	
 	public Resource cargar(String nombrefichero) throws MalformedURLException {
-		Path path = getPath(DownloadFileService.DIRECTORIO_DOWNLOAD, nombrefichero);
+		// Path path = getPath(DownloadFileService.DIRECTORIO_DOWNLOAD, nombrefichero);
+		Path path = getPath("src/main/resources/static", nombrefichero); // app/src/...
+        
+        Path pathBase = Paths.get("/app");
+        Path pathRelative = pathBase.relativize(path);
+		log.error ("pathRelative=", pathRelative);
 		
 		Resource resource = null;
-		resource = new UrlResource(path.toUri());
+		
+		// resource = new UrlResource(path.toUri());
+		resource = new UrlResource(pathRelative.toUri());
+		
 	    if(!resource.exists() || !resource.isReadable()) {
 			log.error("Error, Path para descargas no existe o protegido");
 	    };	
 		return resource;
 	}
 	
-	@GetMapping("download/cvpdf-alternativo")
-	public ResponseEntity<Resource> donwloadCvAlternativo() throws Exception { 
+	@GetMapping("download/micv")
+	public ResponseEntity<Resource> donwloadMiCv() throws Exception { 
 		String filename = downloadFileService.getFilenameGenerado();
 		Resource resource = null;
 		try {
@@ -100,6 +108,25 @@ public class DownloadFileController {
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 		headers.add("Access-Control-Allow-Headers", "Content-Type");
 		headers.add("Content-Disposition", "filename=" + filename);
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		return new ResponseEntity<Resource> (resource, headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("download/cvpdf-alternativo")
+	public ResponseEntity<Resource> donwloadCvAlternativo () throws Exception { 
+
+		Resource resource = null;
+		try {
+			resource = cargar(DownloadFileService.PREFIJO_FILE_DOWNLOAD);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		headers.add("Access-Control-Allow-Headers", "Content-Type");
+		headers.add("Content-Disposition", "filename=" + DownloadFileService.PREFIJO_FILE_DOWNLOAD);
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		headers.add("Pragma", "no-cache");
 		return new ResponseEntity<Resource> (resource, headers, HttpStatus.OK);

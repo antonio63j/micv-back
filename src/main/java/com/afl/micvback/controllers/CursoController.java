@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.afl.micvback.models.entity.Curso;
 import com.afl.micvback.models.services.ICursoService;
 
-//@CrossOrigin(origins = { "http://localhost:4200", "*" })
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 //@CrossOrigin(origins = { "http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
